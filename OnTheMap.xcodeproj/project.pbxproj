@@ -8,22 +8,34 @@
 
 /* Begin PBXBuildFile section */
 		A14744B41F4AF14300B956D4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14744B31F4AF14300B956D4 /* AppDelegate.swift */; };
-		A14744B61F4AF14300B956D4 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14744B51F4AF14300B956D4 /* FirstViewController.swift */; };
-		A14744B81F4AF14300B956D4 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14744B71F4AF14300B956D4 /* SecondViewController.swift */; };
+		A14744B61F4AF14300B956D4 /* MapPeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14744B51F4AF14300B956D4 /* MapPeopleViewController.swift */; };
+		A14744B81F4AF14300B956D4 /* ListPeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14744B71F4AF14300B956D4 /* ListPeopleViewController.swift */; };
 		A14744BB1F4AF14300B956D4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A14744B91F4AF14300B956D4 /* Main.storyboard */; };
 		A14744BD1F4AF14300B956D4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A14744BC1F4AF14300B956D4 /* Assets.xcassets */; };
 		A14744C01F4AF14300B956D4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A14744BE1F4AF14300B956D4 /* LaunchScreen.storyboard */; };
+		A14744C91F4AFC2000B956D4 /* OTMConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14744C81F4AFC2000B956D4 /* OTMConstants.swift */; };
+		A1B6AAD61F4AFD1F004E5A22 /* OTMClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B6AAD51F4AFD1F004E5A22 /* OTMClient.swift */; };
+		A1B6AAD81F4AFD7B004E5A22 /* GCDExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B6AAD71F4AFD7B004E5A22 /* GCDExtension.swift */; };
+		A1B6AADA1F4AFE71004E5A22 /* OTMPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B6AAD91F4AFE71004E5A22 /* OTMPerson.swift */; };
+		A1B6AADC1F4B03BF004E5A22 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B6AADB1F4B03BF004E5A22 /* LoginViewController.swift */; };
+		A1B6AADE1F4B08E2004E5A22 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B6AADD1F4B08E2004E5A22 /* SignupViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		A14744B01F4AF14300B956D4 /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A14744B31F4AF14300B956D4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A14744B51F4AF14300B956D4 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
-		A14744B71F4AF14300B956D4 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
+		A14744B51F4AF14300B956D4 /* MapPeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPeopleViewController.swift; sourceTree = "<group>"; };
+		A14744B71F4AF14300B956D4 /* ListPeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPeopleViewController.swift; sourceTree = "<group>"; };
 		A14744BA1F4AF14300B956D4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A14744BC1F4AF14300B956D4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A14744BF1F4AF14300B956D4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A14744C11F4AF14300B956D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A14744C81F4AFC2000B956D4 /* OTMConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMConstants.swift; sourceTree = "<group>"; };
+		A1B6AAD51F4AFD1F004E5A22 /* OTMClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMClient.swift; sourceTree = "<group>"; };
+		A1B6AAD71F4AFD7B004E5A22 /* GCDExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDExtension.swift; sourceTree = "<group>"; };
+		A1B6AAD91F4AFE71004E5A22 /* OTMPerson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMPerson.swift; sourceTree = "<group>"; };
+		A1B6AADB1F4B03BF004E5A22 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		A1B6AADD1F4B08E2004E5A22 /* SignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,14 +69,44 @@
 			isa = PBXGroup;
 			children = (
 				A14744B31F4AF14300B956D4 /* AppDelegate.swift */,
-				A14744B51F4AF14300B956D4 /* FirstViewController.swift */,
-				A14744B71F4AF14300B956D4 /* SecondViewController.swift */,
+				A1B6AAD71F4AFD7B004E5A22 /* GCDExtension.swift */,
+				A1B6AAD31F4AFCC9004E5A22 /* Model */,
+				A14744C71F4AFBD900B956D4 /* Controller */,
 				A14744B91F4AF14300B956D4 /* Main.storyboard */,
 				A14744BC1F4AF14300B956D4 /* Assets.xcassets */,
 				A14744BE1F4AF14300B956D4 /* LaunchScreen.storyboard */,
 				A14744C11F4AF14300B956D4 /* Info.plist */,
 			);
 			path = OnTheMap;
+			sourceTree = "<group>";
+		};
+		A14744C71F4AFBD900B956D4 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A14744B51F4AF14300B956D4 /* MapPeopleViewController.swift */,
+				A14744B71F4AF14300B956D4 /* ListPeopleViewController.swift */,
+				A1B6AADB1F4B03BF004E5A22 /* LoginViewController.swift */,
+				A1B6AADD1F4B08E2004E5A22 /* SignupViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		A1B6AAD31F4AFCC9004E5A22 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A1B6AAD41F4AFCEB004E5A22 /* Client */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		A1B6AAD41F4AFCEB004E5A22 /* Client */ = {
+			isa = PBXGroup;
+			children = (
+				A1B6AAD51F4AFD1F004E5A22 /* OTMClient.swift */,
+				A14744C81F4AFC2000B956D4 /* OTMConstants.swift */,
+				A1B6AAD91F4AFE71004E5A22 /* OTMPerson.swift */,
+			);
+			name = Client;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,9 +181,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A14744B81F4AF14300B956D4 /* SecondViewController.swift in Sources */,
+				A1B6AADE1F4B08E2004E5A22 /* SignupViewController.swift in Sources */,
+				A1B6AAD81F4AFD7B004E5A22 /* GCDExtension.swift in Sources */,
+				A14744B81F4AF14300B956D4 /* ListPeopleViewController.swift in Sources */,
+				A1B6AADA1F4AFE71004E5A22 /* OTMPerson.swift in Sources */,
 				A14744B41F4AF14300B956D4 /* AppDelegate.swift in Sources */,
-				A14744B61F4AF14300B956D4 /* FirstViewController.swift in Sources */,
+				A1B6AADC1F4B03BF004E5A22 /* LoginViewController.swift in Sources */,
+				A1B6AAD61F4AFD1F004E5A22 /* OTMClient.swift in Sources */,
+				A14744B61F4AF14300B956D4 /* MapPeopleViewController.swift in Sources */,
+				A14744C91F4AFC2000B956D4 /* OTMConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -305,6 +353,7 @@
 				A14744C61F4AF14300B956D4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

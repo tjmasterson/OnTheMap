@@ -1,5 +1,5 @@
 //
-//  SecondViewController.swift
+//  MapPeopleViewController.swift
 //  OnTheMap
 //
 //  Created by Taylor Masterson on 8/21/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SecondViewController: UIViewController {
+class MapPeopleViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

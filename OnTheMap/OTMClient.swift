@@ -17,9 +17,8 @@ class OTMClient: NSObject {
 
     
     // authentication state
-    var requestToken: String? = nil
     var sessionID: String? = nil
-    var userID: Int? = nil
+    var userID: String? = nil
     
     
     // MARK: Initializers 
@@ -32,12 +31,7 @@ class OTMClient: NSObject {
 
         postCredentials(parameters: parameters) { (success, errorString) in
             if (success != nil) {
-                self.parseAndSaveLoginDetails(success as! [String : AnyObject])
-                print("here it is")
-                
-                // got some problems here getting nil for success
-                // user id error
-                print(self.userID)
+                self.parseAndSaveLoginDetails(success as! [String: AnyObject])
             }
             completionHandlerForCredentialLogin(success, errorString)
         }
@@ -45,17 +39,6 @@ class OTMClient: NSObject {
     }
     
     func postCredentials(parameters: [String: AnyObject], completionHandlerForPostCredentials: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void ) -> Void {
-        /*Return type */
-        /*
-         account =     {
-         key = 10512874431;
-         registered = 1;
-         };
-         session =     {
-         expiration = "2017-10-21T12:22:38.818150Z";
-         id = 1534940558S61479e64efe0f043a0964e01e25620e7;
-         };
-         */
         
         let placeHolder = [String: AnyObject]()
         
@@ -132,18 +115,15 @@ class OTMClient: NSObject {
     }
     
     private func parseAndSaveLoginDetails(_ data: [String:AnyObject]) {
-        
         guard let account = data[OTMClient.JSONResponseKeys.Account] as? [String: AnyObject] else {
             print("account error")
             return
         }
-        
-        guard let userID = account[OTMClient.JSONResponseKeys.UserID] as? Int else {
+
+        guard let userID = account[OTMClient.JSONResponseKeys.UserID] as? String else {
             print("user id error")
             return
         }
-        
-        self.userID = userID
         
         guard let session = data[OTMClient.JSONResponseKeys.Session] as? [String: AnyObject] else {
             print(" session error")
@@ -155,6 +135,7 @@ class OTMClient: NSObject {
             return
         }
         
+        self.userID = userID
         self.sessionID = sessionID
     }
     

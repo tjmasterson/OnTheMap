@@ -10,12 +10,17 @@ import UIKit
 
 class LoginViewController: UIViewController {
 
+    var activityIndicator: UIActivityIndicatorView!
+    var originalButtonText: String?
+    
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var debugTextLabel: UILabel!
     
     
     @IBAction func loginButtonPressed(_ sender: Any) {
+        showLoading()
         let parameters: [String: AnyObject] = [
             OTMClient.JSONBodyValues.Username: emailTextField.text! as AnyObject,
             OTMClient.JSONBodyValues.Password: passwordTextField.text! as AnyObject,
@@ -24,7 +29,7 @@ class LoginViewController: UIViewController {
         let _ = OTMClient.sharedInstance().taskForCredentialLoginMethod(parameters: parameters) { (success, errorString) in
             performUIUpdatesOnMain {
                 if (success != nil) {
-                    print("self.completeCredentialLogin()")
+                    self.completeCredentialLogin()
                 } else {
                     print("self.displayError(errorString)")
                 }
@@ -45,11 +50,15 @@ class LoginViewController: UIViewController {
     }
 
     func completeCredentialLogin() {
-        
+        debugTextLabel.text = ""
+        let controller = storyboard!.instantiateViewController(withIdentifier: "OnTheMapNavigationController") as! UINavigationController
+        present(controller, animated: true, completion: nil)
     }
     
-    func displayError() {
-        
+    func displayError(_ errorString: String?) {
+        if let errorString = errorString {
+            debugTextLabel.text = errorString
+        }
     }
 
 }
@@ -68,4 +77,45 @@ extension LoginViewController: UITextFieldDelegate {
         return true
     }
     
+}
+
+extension LoginViewController {
+    
+    func showLoading() {
+        originalButtonText = loginButton.titleLabel?.text
+        loginButton.setTitle("", for: .normal)
+        
+        if (activityIndicator == nil) {
+            activityIndicator = createActivityIndicator()
+        }
+        
+        showSpinning()
+    }
+    
+    func hideLoading() {
+        loginButton.setTitle(originalButtonText, for: .normal)
+        activityIndicator.stopAnimating()
+    }
+    
+    private func createActivityIndicator() -> UIActivityIndicatorView {
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.color = UIColor.lightGray
+        return activityIndicator
+    }
+    
+    private func showSpinning() {
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        loginButton.addSubview(activityIndicator)
+        centerActivityIndicatorInButton()
+        activityIndicator.startAnimating()
+    }
+    
+    private func centerActivityIndicatorInButton() {
+        let xCenterConstraint = NSLayoutConstraint(item: loginButton, attribute: .centerX, relatedBy: .equal, toItem: activityIndicator, attribute: .centerX, multiplier: 1, constant: 0)
+        
+        let yCenterConstraint = NSLayoutConstraint(item: loginButton, attribute: .centerY, relatedBy: .equal, toItem: activityIndicator, attribute: .centerY, multiplier: 1, constant: 0)
+        loginButton.addConstraint(xCenterConstraint)
+        loginButton.addConstraint(yCenterConstraint)
+    }
 }

@@ -16,8 +16,8 @@ struct OTMPerson {
     let mapString: String
     let mediaURL: String
     let objectID: String
-    let uniqueKey: Int
     let updatedAt: String
+    let uniqueKey: String?
     
     init(dictionary: [String: AnyObject]) {
         createdAt = dictionary[OTMClient.JSONResponseKeys.PersonCreatedAt] as! String
@@ -28,8 +28,8 @@ struct OTMPerson {
         mapString = dictionary[OTMClient.JSONResponseKeys.PersonMapString] as! String
         mediaURL = dictionary[OTMClient.JSONResponseKeys.PersonMediaURL] as! String
         objectID = dictionary[OTMClient.JSONResponseKeys.PersonObjectID] as! String
-        uniqueKey = dictionary[OTMClient.JSONResponseKeys.PersonUniqueKey] as! Int
         updatedAt = dictionary[OTMClient.JSONResponseKeys.PersonUpdatedAt] as! String
+        uniqueKey = dictionary[OTMClient.JSONResponseKeys.PersonUniqueKey] as? String
     }
     
     static func peopleFromResults(_ results: [[String:AnyObject]]) -> [OTMPerson] {

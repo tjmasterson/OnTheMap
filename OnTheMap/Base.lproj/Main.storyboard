@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="5sh-jo-clb">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Jn9-CZ-Pug">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -154,11 +155,17 @@
             </objects>
             <point key="canvasLocation" x="-1378" y="-20"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--On The Map-->
         <scene sceneID="yl2-sM-qoP">
             <objects>
                 <tabBarController id="49e-Tb-3d3" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="gi7-fV-VSC"/>
+                    <navigationItem key="navigationItem" title="On The Map" id="gi7-fV-VSC">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="SvD-0J-cNj"/>
+                        <rightBarButtonItems>
+                            <barButtonItem image="icon_refresh" id="fZC-vx-YxU"/>
+                            <barButtonItem image="icon_pin" id="8hS-w5-T4k"/>
+                        </rightBarButtonItems>
+                    </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
                         <rect key="frame" x="0.0" y="975" width="768" height="49"/>
@@ -177,7 +184,7 @@
         <!--Map-->
         <scene sceneID="yH4-Bi-TIa">
             <objects>
-                <navigationController id="xbQ-oN-Hka" sceneMemberID="viewController">
+                <navigationController navigationBarHidden="YES" id="xbQ-oN-Hka" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Map" image="icon_mapview-deselected" selectedImage="icon_mapview-selected" id="xmL-sb-bIr"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="S6D-rc-FXe">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -202,18 +209,35 @@
                     <view key="view" contentMode="scaleToFill" id="t2P-mG-EgB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="dQS-SA-c2R">
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <connections>
+                                    <outlet property="delegate" destination="6BS-jn-yPd" id="Dtn-qK-nf7"/>
+                                </connections>
+                            </mapView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="OmS-YW-DUK" firstAttribute="top" secondItem="dQS-SA-c2R" secondAttribute="bottom" id="Rvz-TI-W6l"/>
+                            <constraint firstItem="dQS-SA-c2R" firstAttribute="top" secondItem="TuJ-0w-KLM" secondAttribute="bottom" id="ls1-sQ-drO"/>
+                            <constraint firstAttribute="trailing" secondItem="dQS-SA-c2R" secondAttribute="trailing" id="t4b-S1-2XU"/>
+                            <constraint firstItem="dQS-SA-c2R" firstAttribute="leading" secondItem="t2P-mG-EgB" secondAttribute="leading" id="wew-x5-LBn"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="vLv-TL-566"/>
+                    <navigationItem key="navigationItem" id="16Y-JT-i0m"/>
+                    <connections>
+                        <outlet property="mapView" destination="dQS-SA-c2R" id="Otk-Cu-A2M"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HXz-eX-l4U" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1785" y="-378"/>
+            <point key="canvasLocation" x="1784.8" y="-378.26086956521743"/>
         </scene>
         <!--List-->
         <scene sceneID="G4e-ak-jbN">
             <objects>
-                <navigationController id="IDd-UP-yHp" sceneMemberID="viewController">
+                <navigationController navigationBarHidden="YES" id="IDd-UP-yHp" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="List" image="icon_listview-deselected" selectedImage="icon_listview-selected" id="MSh-5a-HNs"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="WRV-Dm-OJm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -230,7 +254,7 @@
         <!--List People View Controller-->
         <scene sceneID="tU2-Zs-SlB">
             <objects>
-                <viewController id="Jeo-Iv-G2c" customClass="ListPeopleViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="Jeo-Iv-G2c" customClass="ListPeopleViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="7Bc-8g-0fv"/>
                         <viewControllerLayoutGuide type="bottom" id="Fyh-8L-Uvf"/>
@@ -239,19 +263,46 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="euj-Js-dnP">
-                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="69" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="euj-Js-dnP">
+                                <rect key="frame" x="0.0" y="20" width="375" height="598"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ListPeopleTableViewCell" id="L46-Xw-cGu">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ListPeopleTableViewCell" rowHeight="69" id="L46-Xw-cGu" customClass="ListPeopleTableViewCell" customModule="OnTheMap" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="69"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="L46-Xw-cGu" id="0QF-UR-gKa">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="68.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_pin" translatesAutoresizingMaskIntoConstraints="NO" id="BDr-41-5hX">
+                                                    <rect key="frame" x="8" y="8" width="50" height="50"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="50" id="924-mt-41s"/>
+                                                        <constraint firstAttribute="width" constant="50" id="Ebs-ik-dEc"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XvP-Vy-tCw">
+                                                    <rect key="frame" x="66" y="8" width="301" height="50"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="BDr-41-5hX" firstAttribute="top" secondItem="0QF-UR-gKa" secondAttribute="topMargin" id="TqI-0v-4Y2"/>
+                                                <constraint firstItem="BDr-41-5hX" firstAttribute="leading" secondItem="0QF-UR-gKa" secondAttribute="leadingMargin" id="UHq-mH-j3r"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="nameLabel" destination="XvP-Vy-tCw" id="pgS-h7-2bs"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="Jeo-Iv-G2c" id="mFN-o1-KT5"/>
+                                    <outlet property="delegate" destination="Jeo-Iv-G2c" id="Hpe-zN-I61"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -277,6 +328,8 @@
         <image name="icon_listview-selected" width="75" height="50"/>
         <image name="icon_mapview-deselected" width="75" height="50"/>
         <image name="icon_mapview-selected" width="75" height="50"/>
+        <image name="icon_pin" width="24" height="24"/>
+        <image name="icon_refresh" width="24" height="24"/>
         <image name="logo-u" width="62" height="62"/>
     </resources>
 </document>

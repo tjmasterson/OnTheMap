@@ -21,6 +21,7 @@ class LoginViewController: UIViewController {
     
     @IBAction func loginButtonPressed(_ sender: Any) {
         showLoading()
+        
         let parameters: [String: AnyObject] = [
             OTMClient.JSONBodyValues.Username: emailTextField.text! as AnyObject,
             OTMClient.JSONBodyValues.Password: passwordTextField.text! as AnyObject,
@@ -28,6 +29,8 @@ class LoginViewController: UIViewController {
         
         let _ = OTMClient.sharedInstance().taskForCredentialLoginMethod(parameters: parameters) { (success, errorString) in
             performUIUpdatesOnMain {
+                self.hideLoading()
+                
                 if (success != nil) {
                     self.completeCredentialLogin()
                 } else {
@@ -40,6 +43,7 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 //        shouldLoginBeDisabled()
+
     }
     
     func shouldLoginBeDisabled() {
@@ -98,9 +102,10 @@ extension LoginViewController {
     }
     
     private func createActivityIndicator() -> UIActivityIndicatorView {
+    
         let activityIndicator = UIActivityIndicatorView()
         activityIndicator.hidesWhenStopped = true
-        activityIndicator.color = UIColor.lightGray
+        activityIndicator.color = UIColor.white
         return activityIndicator
     }
     

@@ -11,10 +11,12 @@ import Foundation
 extension OTMClient {
     
     struct Constants {
+        static let ParseApiKeyHeader = "X-Parse-Application-Id"
+        static let RESTApiKeyHeader = "X-Parse-REST-API-Key"
         static let ParseApiKey = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
         static let RESTApiKey = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
         
-        static let APiScheme = "https"
+        static let ApiScheme = "https"
         static let ApiHost = "parse.udacity.com"
         static let ApiPath = "/parse/classes"
         static let AuthURL = "https://www.udacity.com/api/session"
@@ -22,7 +24,7 @@ extension OTMClient {
     }
     
     struct Methods {
-        static let People = "StudentLocation"
+        static let People = "/StudentLocation"
         
     }
     
@@ -37,6 +39,11 @@ extension OTMClient {
         static let Where = "where"
     }
     
+    struct ParameterValues {
+        static let Limit = "100"
+        static let Order = "-updatedAt"
+    }
+    
     struct JSONBodyKeys {
         static let Username = "username"
         static let Password = "password"
@@ -48,6 +55,8 @@ extension OTMClient {
     }
     
     struct JSONResponseKeys {
+        static let PeopleResults = "results"
+        
         static let PersonCreatedAt = "createdAt"
         static let PersonFirstName = "firstName"
         static let PersonLastName = "lastName"

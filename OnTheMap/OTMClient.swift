@@ -19,6 +19,8 @@ class OTMClient: NSObject {
     // authentication state
     var sessionID: String? = nil
     var userID: String? = nil
+    var defaultGetPeopleParams = [OTMClient.ParameterKeys.Limit: OTMClient.ParameterValues.Limit,
+                                  OTMClient.ParameterKeys.Order: OTMClient.ParameterValues.Order] as [String: AnyObject]
     
     
     // MARK: Initializers 
@@ -27,19 +29,90 @@ class OTMClient: NSObject {
         super.init()
     }
     
-    func taskForCredentialLoginMethod(parameters: [String: AnyObject], completionHandlerForCredentialLogin: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void ) -> Void {
+    
+    func getPeople(_ parameters: [String: AnyObject] = [String:AnyObject](),
+                   completionHandlerForGetPeople: @escaping (_ result: [OTMPerson]?, _ error: NSError?) -> Void) {
+        /*
+         - Get the last x number locations that were updated
+         - Default number of results set to 100
+         - Functionality does not support an override to the default number of results, but maybe down the road...
+        */
+        
+        let parametersWithOptions = combine(defaultGetPeopleParams, with: parameters)
+        
+        let _ = taskForGETMethod(OTMClient.Methods.People, parameters: parametersWithOptions) { (results, error) in
 
-        postCredentials(parameters: parameters) { (success, errorString) in
-            if (success != nil) {
-                self.parseAndSaveLoginDetails(success as! [String: AnyObject])
+            if let error = error {
+                completionHandlerForGetPeople(nil, error)
+            } else {
+                if let results = results?[OTMClient.JSONResponseKeys.PeopleResults] as? [[String:AnyObject]] {
+                    let people = OTMPerson.peopleFromResults(results)
+                    completionHandlerForGetPeople(people, nil)
+                } else {
+                    completionHandlerForGetPeople(nil, NSError(domain: "getPeople parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getPeople"]))
+                }
             }
-            completionHandlerForCredentialLogin(success, errorString)
         }
-
+        
     }
     
-    func postCredentials(parameters: [String: AnyObject], completionHandlerForPostCredentials: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void ) -> Void {
+/*  func getPerson() {
         
+    }
+    
+    func createPersonLocation() {
+        
+    }
+    
+    func updatePersonLocation() {
+        
+    }
+*/
+    
+    func taskForGETMethod(_ method: String, parameters: [String: AnyObject], completionHandlerForGET: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+        
+        let url = otmParseURLFromParameters(parameters, withPathExtension: method)
+        let request = otmRequestWithApiKeys(url: url)
+        request.httpMethod = "GET"
+        
+        let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
+            
+            func sendError(_ error: String) {
+                print(error)
+                let userInfo = [NSLocalizedDescriptionKey: error]
+                completionHandlerForGET(nil, NSError(domain: "taskForGETMethod", code: 1, userInfo: userInfo))
+            }
+            
+            // GUARD: Make sure we don't get an error from the api
+            guard (error == nil) else {
+                sendError("There was an error with your request: \(error!)")
+                return
+            }
+            
+            // GUARD: Make sure we get a response status in a successful range
+            let successRange: Range<Int> = 200..<300
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, successRange.contains(statusCode) else {
+                sendError("Your request returned a status code other than 2xx!")
+                return
+            }
+            
+            // GUARD: Make sure there is data coming back from the api
+            guard let data = data else {
+                sendError("No data was returned by the request!")
+                return
+            }
+            
+            // Parse the byte objects and convert them to a JSON object
+            self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForGET)
+        }
+        
+        task.resume()
+        return task
+        
+    }
+    
+    func taskForCredentialLoginMethod(parameters: [String: AnyObject], completionHandlerForCredentialLogin: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void ) -> Void {
+
         let placeHolder = [String: AnyObject]()
         
         let username: String = String(describing: parameters[OTMClient.JSONBodyValues.Username]!)
@@ -48,26 +121,51 @@ class OTMClient: NSObject {
         
         let _ = taskForPOSTMethod(OTMClient.Constants.AuthURL, parameters: placeHolder, jsonBody: jsonBody) { (results, error) in
             if let error = error {
-                completionHandlerForPostCredentials(nil, error)
+                completionHandlerForCredentialLogin(nil, error)
             } else {
                 if let results = results {
-                    completionHandlerForPostCredentials(results, nil)
+                    self.parseAndSaveLoginDetails(results as! [String: AnyObject])
+                    completionHandlerForCredentialLogin(results, nil)
                 } else {
-                    completionHandlerForPostCredentials(nil, NSError(domain: "postCredentials parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse postCredentials results"]))
+                    completionHandlerForCredentialLogin(nil, NSError(domain: "taskForCredentialLoginMethod parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse taskForCredentialLoginMethod results"]))
                 }
             }
         }
-
+        
+//        postCredentials(parameters: parameters) { (success, errorString) in
+//            if (success != nil) {
+//                self.parseAndSaveLoginDetails(success as! [String: AnyObject])
+//            }
+//            completionHandlerForCredentialLogin(success, errorString)
+//        }
 
     }
     
+//    func postCredentials(parameters: [String: AnyObject], completionHandlerForPostCredentials: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void ) -> Void {
+//        
+//        let placeHolder = [String: AnyObject]()
+//        
+//        let username: String = String(describing: parameters[OTMClient.JSONBodyValues.Username]!)
+//        let password: String = String(describing: parameters[OTMClient.JSONBodyValues.Password]!)
+//        let jsonBody = "{\"udacity\": {\"username\": \"\(username)\", \"password\": \"\(password)\"}}"
+//        
+//        let _ = taskForPOSTMethod(OTMClient.Constants.AuthURL, parameters: placeHolder, jsonBody: jsonBody) { (results, error) in
+//            if let error = error {
+//                completionHandlerForPostCredentials(nil, error)
+//            } else {
+//                if let results = results {
+//                    completionHandlerForPostCredentials(results, nil)
+//                } else {
+//                    completionHandlerForPostCredentials(nil, NSError(domain: "postCredentials parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse postCredentials results"]))
+//                }
+//            }
+//        }
+//
+//
+//    }
+    
+    
     func taskForPOSTMethod(_ method: String, parameters: [String:AnyObject], jsonBody: String, completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
-        
-        
-        var parametersWithApiKey = parameters
-        
-        
-//        let request = NSMutableURLRequest(url: tmdbURLFromParameters(parametersWithApiKey, withPathExtension: method))
         
         let request = NSMutableURLRequest(url: URL(string: method)!)
         request.httpMethod = "POST"
@@ -81,7 +179,7 @@ class OTMClient: NSObject {
             func sendError(_ error: String) {
                 print(error)
                 let userInfo = [NSLocalizedDescriptionKey : error]
-                completionHandlerForPOST(nil, NSError(domain: "taskForGETMethod", code: 1, userInfo: userInfo))
+                completionHandlerForPOST(nil, NSError(domain: "taskForPOSTMethod", code: 1, userInfo: userInfo))
             }
             
             /* GUARD: Was there an error? */
@@ -137,6 +235,39 @@ class OTMClient: NSObject {
         
         self.userID = userID
         self.sessionID = sessionID
+    }
+    
+    private func otmRequestWithApiKeys(url: URL) -> NSMutableURLRequest {
+        let request = NSMutableURLRequest(url: url)
+        request.addValue(OTMClient.Constants.ParseApiKey, forHTTPHeaderField: OTMClient.Constants.ParseApiKeyHeader)
+        request.addValue(OTMClient.Constants.RESTApiKey, forHTTPHeaderField: OTMClient.Constants.RESTApiKeyHeader)
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        return request
+    }
+    
+    private func otmParseURLFromParameters(_ parameters: [String:AnyObject], withPathExtension: String? = nil) -> URL {
+        
+        var components = URLComponents()
+        components.scheme = OTMClient.Constants.ApiScheme
+        components.host = OTMClient.Constants.ApiHost
+        components.path = OTMClient.Constants.ApiPath + (withPathExtension ?? "")
+        components.queryItems = [URLQueryItem]()
+        
+        for (key, value) in parameters {
+            let queryItem = URLQueryItem(name: key, value: "\(value)")
+            components.queryItems!.append(queryItem)
+        }
+        
+        return components.url!
+    }
+    
+    private func combine(_ baseParams: [String: AnyObject], with options: [String: AnyObject]) -> [String: AnyObject] {
+        var paramsWithOptions = baseParams
+        for (key, value) in options {
+            paramsWithOptions.updateValue(value, forKey: key)
+        }
+        return paramsWithOptions
     }
     
     

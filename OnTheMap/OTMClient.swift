@@ -46,7 +46,7 @@ class OTMClient: NSObject {
                 completionHandlerForGetPeople(nil, error)
             } else {
                 if let results = results?[OTMClient.JSONResponseKeys.PeopleResults] as? [[String:AnyObject]] {
-                    let people = OTMPerson.peopleFromResults(results)
+                    let people = OTMData.shared.peopleFromResults(results)
                     completionHandlerForGetPeople(people, nil)
                 } else {
                     completionHandlerForGetPeople(nil, NSError(domain: "getPeople parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getPeople"]))
@@ -131,39 +131,7 @@ class OTMClient: NSObject {
                 }
             }
         }
-        
-//        postCredentials(parameters: parameters) { (success, errorString) in
-//            if (success != nil) {
-//                self.parseAndSaveLoginDetails(success as! [String: AnyObject])
-//            }
-//            completionHandlerForCredentialLogin(success, errorString)
-//        }
-
     }
-    
-//    func postCredentials(parameters: [String: AnyObject], completionHandlerForPostCredentials: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void ) -> Void {
-//        
-//        let placeHolder = [String: AnyObject]()
-//        
-//        let username: String = String(describing: parameters[OTMClient.JSONBodyValues.Username]!)
-//        let password: String = String(describing: parameters[OTMClient.JSONBodyValues.Password]!)
-//        let jsonBody = "{\"udacity\": {\"username\": \"\(username)\", \"password\": \"\(password)\"}}"
-//        
-//        let _ = taskForPOSTMethod(OTMClient.Constants.AuthURL, parameters: placeHolder, jsonBody: jsonBody) { (results, error) in
-//            if let error = error {
-//                completionHandlerForPostCredentials(nil, error)
-//            } else {
-//                if let results = results {
-//                    completionHandlerForPostCredentials(results, nil)
-//                } else {
-//                    completionHandlerForPostCredentials(nil, NSError(domain: "postCredentials parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse postCredentials results"]))
-//                }
-//            }
-//        }
-//
-//
-//    }
-    
     
     func taskForPOSTMethod(_ method: String, parameters: [String:AnyObject], jsonBody: String, completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
@@ -200,8 +168,11 @@ class OTMClient: NSObject {
                 return
             }
             
-            let range = Range(5..<data!.count)
-            let newData = data!.subdata(in: range)
+            /* Trim the first 5 bytes if we are posting to udacity */
+            var newData: Data = data!
+            if method == OTMClient.Constants.AuthURL {
+                newData = self.normalizeAuth(data!)
+            }
             
             self.convertDataWithCompletionHandler(newData, completionHandlerForConvertData: completionHandlerForPOST)
         }
@@ -210,6 +181,11 @@ class OTMClient: NSObject {
         task.resume()
         
         return task
+    }
+    
+    private func normalizeAuth(_ data: Data) -> Data {
+        let range = Range(5..<data.count)
+        return data.subdata(in: range)
     }
     
     private func parseAndSaveLoginDetails(_ data: [String:AnyObject]) {

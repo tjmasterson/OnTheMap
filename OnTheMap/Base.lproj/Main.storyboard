@@ -158,12 +158,24 @@
         <!--On The Map-->
         <scene sceneID="yl2-sM-qoP">
             <objects>
-                <tabBarController id="49e-Tb-3d3" sceneMemberID="viewController">
+                <tabBarController id="49e-Tb-3d3" customClass="BasePeopleViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" title="On The Map" id="gi7-fV-VSC">
-                        <barButtonItem key="leftBarButtonItem" title="Logout" id="SvD-0J-cNj"/>
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="SvD-0J-cNj">
+                            <connections>
+                                <action selector="logoutButtonPressed:" destination="49e-Tb-3d3" id="ceD-oF-QGy"/>
+                            </connections>
+                        </barButtonItem>
                         <rightBarButtonItems>
-                            <barButtonItem image="icon_refresh" id="fZC-vx-YxU"/>
-                            <barButtonItem image="icon_pin" id="8hS-w5-T4k"/>
+                            <barButtonItem image="icon_refresh" id="fZC-vx-YxU">
+                                <connections>
+                                    <action selector="refreshButtonPressed:" destination="49e-Tb-3d3" id="TzG-dQ-nB3"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="icon_pin" id="8hS-w5-T4k">
+                                <connections>
+                                    <action selector="addPinButtonPressed:" destination="49e-Tb-3d3" id="jJI-Q9-G2Y"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
@@ -173,6 +185,9 @@
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
                     <connections>
+                        <outlet property="addPinButton" destination="8hS-w5-T4k" id="K3w-w3-4Cq"/>
+                        <outlet property="logoutButton" destination="SvD-0J-cNj" id="dDQ-pW-Oiu"/>
+                        <outlet property="refreshButton" destination="fZC-vx-YxU" id="oet-ew-Gh7"/>
                         <segue destination="xbQ-oN-Hka" kind="relationship" relationship="viewControllers" id="l7p-Dm-HGN"/>
                         <segue destination="IDd-UP-yHp" kind="relationship" relationship="viewControllers" id="RyR-SB-BeA"/>
                     </connections>

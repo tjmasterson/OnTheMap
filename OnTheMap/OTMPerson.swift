@@ -32,13 +32,4 @@ struct OTMPerson {
         uniqueKey = dictionary[OTMClient.JSONResponseKeys.PersonUniqueKey] as? String
     }
     
-    static func peopleFromResults(_ results: [[String:AnyObject]]) -> [OTMPerson] {
-        var people = [OTMPerson]()
-        
-        for person in results {
-            people.append(OTMPerson(dictionary: person))
-        }
-        
-        return people
-    }
 }

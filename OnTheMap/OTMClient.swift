@@ -46,7 +46,7 @@ class OTMClient: NSObject {
                 completionHandlerForGetPeople(nil, error)
             } else {
                 if let results = results?[OTMClient.JSONResponseKeys.PeopleResults] as? [[String:AnyObject]] {
-                    let people = OTMData.shared.peopleFromResults(results)
+                    let people = OTMPerson.peopleFromResults(results)
                     completionHandlerForGetPeople(people, nil)
                 } else {
                     completionHandlerForGetPeople(nil, NSError(domain: "getPeople parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getPeople"]))
@@ -56,13 +56,15 @@ class OTMClient: NSObject {
         
     }
     
-/*  func getPerson() {
+    func createPersonLocation(_ parameters: [String: AnyObject] = [String: AnyObject](),
+                              completionHandlerForCreatePerson: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) {
         
     }
     
-    func createPersonLocation() {
+/*  func getPerson() {
         
     }
+
     
     func updatePersonLocation() {
         

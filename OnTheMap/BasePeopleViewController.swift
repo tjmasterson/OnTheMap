@@ -15,30 +15,31 @@ class BasePeopleViewController: UITabBarController {
     @IBOutlet weak var logoutButton: UIBarButtonItem!
     
     @IBAction func refreshButtonPressed(_ sender: Any) {
+        fetchPeopleData()
     }
+    
     @IBAction func addPinButtonPressed(_ sender: Any) {
+        let initializeLocationViewController = storyboard!.instantiateViewController(withIdentifier: "InitializeLocationViewController") as! InitializeLocationViewController
+       present(initializeLocationViewController, animated: true, completion: nil)
     }
+    
     @IBAction func logoutButtonPressed(_ sender: Any) {
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        refresh()
+        fetchPeopleData()
     }
     
-    func refresh() {
-        
-        MapPeopleViewController().refresh()
-        ListPeopleViewController().refresh()
-
-    }
-    
-    func addPersonToMap() {
-        
-    }
-    
-    func logout() {
-        
+    func fetchPeopleData() {
+        OTMClient.sharedInstance().getPeople() { (people, error) in
+            if let people = people {
+                performUIUpdatesOnMain {
+                    OTMData.shared.people = people
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: "RefreshPeopleData"), object: self)
+                }
+            }
+        }
     }
 
 }

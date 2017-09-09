@@ -15,28 +15,19 @@ class ListPeopleTableViewCell: UITableViewCell {
 
 class ListPeopleViewController: UIViewController {
 
-//    var people: [OTMPerson] = [OTMPerson]()
-    
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchPeople()
     }
     
-    func fetchPeople() {
-        OTMClient.sharedInstance().getPeople() { (people, error) in
-            if let _ = people {
-                performUIUpdatesOnMain {
-                    self.tableView.reloadData()
-                }
-            }
-        }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: Notification.Name(rawValue: "RefreshPeopleData"), object: nil)
     }
     
     func refresh() {
-        print("hey from list")
-//        fetchPeople()
+        self.tableView.reloadData()
     }
 
 }

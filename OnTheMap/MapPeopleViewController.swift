@@ -17,27 +17,19 @@ class MapPeopleViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        OTMClient.sharedInstance().getPeople() { (people, error) in
-            if let _ = people {
-                performUIUpdatesOnMain {
-                    self.plotUserLocationPins()
-                }
-            }
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-    }
-    func refresh() {
-        print("hey from map")
+        NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: Notification.Name(rawValue: "RefreshPeopleData"), object: nil)
     }
     
-    func plotUserLocationPins() {
-        mapView.removeAnnotations(mapView.annotations)
+    func refresh() {
+        if (!mapView.annotations.isEmpty) {
+            mapView.removeAnnotations(mapView.annotations)
+        }
         
         var annotations = [MKPointAnnotation]()
-        
         for person in OTMData.shared.people {
             let lat = CLLocationDegrees(person.latitude)
             let lng = CLLocationDegrees(person.longitude)
@@ -55,6 +47,7 @@ class MapPeopleViewController: UIViewController {
             // not really sure why I don't need to keep this...
             // self.mapView.addAnnotation(annotation)
         }
+
         mapView.showAnnotations(annotations, animated: true)
     }
 

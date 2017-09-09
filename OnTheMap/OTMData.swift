@@ -12,26 +12,9 @@ class OTMData {
     
     private init() { }
     
-    static let shared = OTMData()
-
     var people: [OTMPerson] = [OTMPerson]()
     
-    func peopleFromResults(_ results: [[String:AnyObject]]) -> [OTMPerson] {
-        for person in results {
-            if allValuesPresent(person) {
-                self.people.append(OTMPerson(dictionary: person))
-            }
-        }
-        return people
-    }
+    static let shared = OTMData()
     
-    func allValuesPresent(_ person: [String: AnyObject?]) -> Bool {
-        for (_, value) in person {
-            if value == nil {
-                return false
-            }
-        }
-        return true
-    }
 
 }

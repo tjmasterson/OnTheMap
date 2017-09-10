@@ -20,16 +20,16 @@ struct OTMPerson {
     let uniqueKey: String?
     
     init(dictionary: [String: AnyObject]) {
-        createdAt = dictionary[OTMClient.JSONResponseKeys.PersonCreatedAt] as! String
-        firstName = dictionary[OTMClient.JSONResponseKeys.PersonFirstName] as! String
-        lastName = dictionary[OTMClient.JSONResponseKeys.PersonLastName] as! String
-        latitude = dictionary[OTMClient.JSONResponseKeys.PersonLatitude] as! Double
-        longitude = dictionary[OTMClient.JSONResponseKeys.PersonLongitude] as! Double
-        mapString = dictionary[OTMClient.JSONResponseKeys.PersonMapString] as! String
-        mediaURL = dictionary[OTMClient.JSONResponseKeys.PersonMediaURL] as! String
-        objectID = dictionary[OTMClient.JSONResponseKeys.PersonObjectID] as! String
-        updatedAt = dictionary[OTMClient.JSONResponseKeys.PersonUpdatedAt] as! String
-        uniqueKey = dictionary[OTMClient.JSONResponseKeys.PersonUniqueKey] as? String
+        createdAt = dictionary[ParseClient.JSONResponseKeys.PersonCreatedAt] as! String
+        firstName = dictionary[ParseClient.JSONResponseKeys.PersonFirstName] as! String
+        lastName = dictionary[ParseClient.JSONResponseKeys.PersonLastName] as! String
+        latitude = dictionary[ParseClient.JSONResponseKeys.PersonLatitude] as! Double
+        longitude = dictionary[ParseClient.JSONResponseKeys.PersonLongitude] as! Double
+        mapString = dictionary[ParseClient.JSONResponseKeys.PersonMapString] as! String
+        mediaURL = dictionary[ParseClient.JSONResponseKeys.PersonMediaURL] as! String
+        objectID = dictionary[ParseClient.JSONResponseKeys.PersonObjectID] as! String
+        updatedAt = dictionary[ParseClient.JSONResponseKeys.PersonUpdatedAt] as! String
+        uniqueKey = dictionary[ParseClient.JSONResponseKeys.PersonUniqueKey] as? String
     }
     
     static func peopleFromResults(_ results: [[String:AnyObject]]) -> [OTMPerson] {
@@ -44,7 +44,7 @@ struct OTMPerson {
     
     static func allValuesPresent(_ person: [String: AnyObject?]) -> Bool {
         for (_, value) in person {
-            if value == nil {
+            if let _ = value {
                 return false
             }
         }

@@ -23,11 +23,11 @@ class LoginViewController: UIViewController {
         showLoading()
         
         let parameters: [String: AnyObject] = [
-            OTMClient.JSONBodyValues.Username: emailTextField.text! as AnyObject,
-            OTMClient.JSONBodyValues.Password: passwordTextField.text! as AnyObject,
+            UdacityClient.JSONBodyKeys.Username: emailTextField.text! as AnyObject,
+            UdacityClient.JSONBodyKeys.Password: passwordTextField.text! as AnyObject,
         ]
         
-        let _ = OTMClient.sharedInstance().taskForCredentialLoginMethod(parameters: parameters) { (success, errorString) in
+        let _ = UdacityClient.sharedInstance().taskForCredentialLoginMethod(parameters: parameters) { (success, errorString) in
             performUIUpdatesOnMain {
                 self.hideLoading()
                 

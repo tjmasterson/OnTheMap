@@ -21,7 +21,8 @@ class SaveLocationViewController: UIViewController {
         if let link = shareLinkTextField.text {
             var parameters = [String: AnyObject]()
             parameters["link"] = link as AnyObject
-            OTMClient.sharedInstance().createPersonLocation(parameters) { (results, error) in
+            // "mapString\": \"Mountain View, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": 37.386052, \"longitude\": -122.083851}"
+            ParseClient.sharedInstance().createPersonLocation(parameters) { (results, error) in
                 performUIUpdatesOnMain {
                     (error == nil) ? self.handleSuccess() : self.handleError((error?.domain)!)
                 }

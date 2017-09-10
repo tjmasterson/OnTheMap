@@ -14,6 +14,10 @@ class OTMData {
     
     var people: [OTMPerson] = [OTMPerson]()
     
+    var user: OTMUser?
+    
+    var userHasPostedLocation: Bool = false
+    
     static let shared = OTMData()
     
 

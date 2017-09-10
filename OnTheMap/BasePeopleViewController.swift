@@ -32,7 +32,7 @@ class BasePeopleViewController: UITabBarController {
     }
     
     func fetchPeopleData() {
-        OTMClient.sharedInstance().getPeople() { (people, error) in
+        ParseClient.sharedInstance().getPeople() { (people, error) in
             if let people = people {
                 performUIUpdatesOnMain {
                     OTMData.shared.people = people

@@ -51,7 +51,7 @@ extension UdacityClient {
     struct UserKeys {
         static let UserID = "uniqueKey"
         static let UserSessionID = "sessionID"
-        static let UserFirstName = "firstname"
-        static let UserLastName = "lastname"
+        static let UserFirstName = "firstName"
+        static let UserLastName = "lastName"
     }
 }

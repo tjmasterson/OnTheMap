@@ -164,7 +164,6 @@ extension UdacityClient {
                     
                     userToSave[UdacityClient.UserKeys.UserFirstName] = firstName
                     userToSave[UdacityClient.UserKeys.UserLastName] = lastName
-                    print(userToSave)
                     
                     OTMData.shared.user = OTMUser(dictionary: userToSave)
                     

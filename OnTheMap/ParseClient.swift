@@ -32,7 +32,7 @@ class ParseClient: NSObject {
          - Default number of results set to 100
          - Functionality does not support an override to the default number of results, but maybe down the road...
         */
-        
+       
         let parametersWithOptions = combine(defaultGetPeopleParams, with: parameters)
         
         let _ = taskForGETMethod(ParseClient.Methods.People, parameters: parametersWithOptions) { (results, error) in

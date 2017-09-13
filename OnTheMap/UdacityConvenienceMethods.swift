@@ -145,8 +145,6 @@ extension UdacityClient {
                 completionHandlerForSaveLoginDetails(nil, error)
             } else {
                 if let results = results {
-                    print(results)
-                    
                     guard let user = results[UdacityClient.JSONResponseKeys.User] as? [String: AnyObject] else {
                         print("shit")
                         return

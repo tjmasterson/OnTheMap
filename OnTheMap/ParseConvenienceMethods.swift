@@ -91,6 +91,54 @@ extension ParseClient {
         return task
     }
     
+    func taskForPUTMethod(_ method: String, parameters: [String:AnyObject] = [String:AnyObject](), jsonBodyData: [String: AnyObject], completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+        
+        let url = parseURLFromParameters(parameters, withPathExtension: method)
+        let request = parseRequestWithApiKeys(url: url, httpMethod: "PUT")
+        request.httpBody = serializeJSONBodyData(jsonBodyData)
+        
+        let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
+            
+            func sendError(_ error: String) {
+                print(error)
+                let userInfo = [NSLocalizedDescriptionKey : error]
+                completionHandlerForPOST(nil, NSError(domain: "taskForPOSTMethod", code: 1, userInfo: userInfo))
+            }
+            
+            // GUARD: Make sure we don't get an error from the server
+            guard (error == nil) else {
+                sendError("There was an error with your request: \(error!)")
+                return
+            }
+            
+            // GUARD: Make sure we get a response status in a successful range
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
+                sendError("Your request returned a status code other than 2xx!")
+                return
+            }
+            
+            // GUARD: Make sure there is data coming back from the server
+            guard let data = data else {
+                sendError("No data was returned by the request!")
+                return
+            }
+            
+            self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForPOST)
+        }
+        
+        task.resume()
+        
+        return task
+    }
+    
+    func substituteKeyInMethod(_ method: String, key: String, value: String) -> String? {
+        if method.range(of: "{\(key)}") != nil {
+            return method.replacingOccurrences(of: "{\(key)}", with: value)
+        } else {
+            return nil
+        }
+    }
+
     private func parseRequestWithApiKeys(url: URL, httpMethod: String) -> NSMutableURLRequest {
         
         let request = NSMutableURLRequest(url: url)

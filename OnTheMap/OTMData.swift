@@ -17,6 +17,7 @@ class OTMData {
     var user: OTMUser?
     
     var userHasPostedLocation: Bool = false
+    var overwriteExistingLocation: Bool = false
     
     static let shared = OTMData()
     

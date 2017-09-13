@@ -53,29 +53,24 @@ class ParseClient: NSObject {
     
     func createPersonLocation(_ parameters: [String: AnyObject] = [String: AnyObject](),
                               completionHandlerForCreatePerson: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) {
-        var dataWithOptions: [String: AnyObject] = parameters
         
-        var baseUserData: [String: AnyObject] = [
+        let baseUserData: [String: AnyObject] = [
             UdacityClient.UserKeys.UserID: OTMData.shared.user!.uniqueKey,
             UdacityClient.UserKeys.UserFirstName: OTMData.shared.user!.firstName,
             UdacityClient.UserKeys.UserLastName: OTMData.shared.user!.lastName,
         ] as [String: AnyObject]
         
-        for key in baseUserData.keys {
-            dataWithOptions[key] = baseUserData[key]
-        }
-        
-        let _ = taskForPOSTMethod(ParseClient.Methods.People, jsonBodyData: dataWithOptions) { (results, error) in
+        let paramsWithOptions: [String: AnyObject] = combine(baseUserData, with: parameters)
+        let _ = taskForPOSTMethod(ParseClient.Methods.People, jsonBodyData: paramsWithOptions) { (results, error) in
             
             if let error = error {
                 completionHandlerForCreatePerson(nil, error)
             } else {
-                if let objectID = results?[ParseClient.JSONResponseKeys.ObjectID] as AnyObject? {
-                    print(objectID) // maybe use this somehow to indicate if user wants to override their previous post
+                if let _ = results?[ParseClient.JSONResponseKeys.ObjectID] as AnyObject? {
                     OTMData.shared.userHasPostedLocation = true
                     completionHandlerForCreatePerson(results, nil)
                 } else {
-                    completionHandlerForCreatePerson(nil, NSError(domain: "getPeople parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getPeople"]))
+                    completionHandlerForCreatePerson(nil, NSError(domain: "createPersonLocation parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse createPersonLocation"]))
                 }
             }
         }
@@ -83,15 +78,37 @@ class ParseClient: NSObject {
         
     }
     
-/*  func getPerson() {
-        
-    }
-
     
-    func updatePersonLocation() {
+    func updatePersonLocation(_ parameters: [String: AnyObject] = [String: AnyObject](),
+                              completionHandlerForUpdatePerson: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) {
+        
+        let baseUserData: [String: AnyObject] = [
+            UdacityClient.UserKeys.UserID: OTMData.shared.user!.uniqueKey,
+            UdacityClient.UserKeys.UserFirstName: OTMData.shared.user!.firstName,
+            UdacityClient.UserKeys.UserLastName: OTMData.shared.user!.lastName,
+            ] as [String: AnyObject]
+        
+        let paramsWithOptions: [String: AnyObject] = combine(baseUserData, with: parameters)
+        
+        var mutableMethod: String = ParseClient.Methods.UpdatePerson
+        mutableMethod = substituteKeyInMethod(mutableMethod, key: UdacityClient.UserKeys.UserObjectID, value: OTMData.shared.user!.objectID!)!
+        let _ = taskForPUTMethod(mutableMethod, jsonBodyData: paramsWithOptions) { (results, error) in
+            
+            if let error = error {
+                completionHandlerForUpdatePerson(nil, error)
+            } else {
+                if let _ = results?[ParseClient.JSONResponseKeys.PersonUpdatedAt] as AnyObject? {
+                    OTMData.shared.userHasPostedLocation = true
+                    OTMData.shared.overwriteExistingLocation = false
+                    completionHandlerForUpdatePerson(results, nil)
+                } else {
+                    completionHandlerForUpdatePerson(nil, NSError(domain: "updatePersonLocation parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse updatePersonLocation"]))
+                }
+            }
+        }
+
         
     }
-*/
     
     private func combine(_ baseParams: [String: AnyObject], with options: [String: AnyObject]) -> [String: AnyObject] {
         var paramsWithOptions = baseParams

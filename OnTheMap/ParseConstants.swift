@@ -23,6 +23,7 @@ extension ParseClient {
     
     struct Methods {
         static let People = "/StudentLocation"
+        static let UpdatePerson = "/StudentLocation/{objectID}"
     }
     
     struct ParameterKeys {
@@ -45,6 +46,10 @@ extension ParseClient {
         static let PersonLongitude = "longitude"
         static let PersonMediaURL = "mediaURL"
         static let PersonMapString = "mapString"
+        static let UserMediaURL = "mediaURL"
+        static let UserLatitude = "latitude"
+        static let UserLongitude = "longitude"
+        static let UserMapString = "mapString"
     }
     
     struct JSONResponseKeys {

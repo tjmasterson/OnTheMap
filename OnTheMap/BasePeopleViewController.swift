@@ -19,8 +19,7 @@ class BasePeopleViewController: UITabBarController {
     }
     
     @IBAction func addPinButtonPressed(_ sender: Any) {
-        let initializeLocationViewController = storyboard!.instantiateViewController(withIdentifier: "InitializeLocationViewController") as! InitializeLocationViewController
-       present(initializeLocationViewController, animated: true, completion: nil)
+        OTMData.shared.userHasPostedLocation ? confirmLocationOverwrite() : trasitionToPinCreation()
     }
     
     @IBAction func logoutButtonPressed(_ sender: Any) {
@@ -40,6 +39,24 @@ class BasePeopleViewController: UITabBarController {
                 }
             }
         }
+    }
+    
+    func stagePinRemovalAndTransition(action: UIAlertAction? = nil) {
+        OTMData.shared.overwriteExistingLocation = true
+        trasitionToPinCreation()
+    }
+    
+    func trasitionToPinCreation() {
+        let initializeLocationViewController = storyboard!.instantiateViewController(withIdentifier: "InitializeLocationViewController") as! InitializeLocationViewController
+        present(initializeLocationViewController, animated: true, completion: nil)
+    }
+    
+    func confirmLocationOverwrite() {
+        let message = "You have already posted your location. Would you like to overwrite it?"
+        let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Overwrite", style: .default, handler: self.stagePinRemovalAndTransition))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
 
 }

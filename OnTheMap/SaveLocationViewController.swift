@@ -12,21 +12,26 @@ import MapKit
 class SaveLocationViewController: UIViewController {
 
     var searchResultPlacemarks: [CLPlacemark] = [CLPlacemark]()
+    var userCoordinate: CLLocationCoordinate2D?
+    var userMapString: String?
     
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var shareLinkTextField: UITextField!
     
-    
     @IBAction func submitLocationPressed(_ sender: Any) {
         if let link = shareLinkTextField.text {
-            var parameters = [String: AnyObject]()
-            parameters["link"] = link as AnyObject
-            // "mapString\": \"Mountain View, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": 37.386052, \"longitude\": -122.083851}"
-            ParseClient.sharedInstance().createPersonLocation(parameters) { (results, error) in
-                performUIUpdatesOnMain {
-                    (error == nil) ? self.handleSuccess() : self.handleError((error?.domain)!)
-                }
+            guard let latitude = userCoordinate?.latitude, let longitude = userCoordinate?.longitude else {
+                handleError("There was a problem finding your latitude or longitude of your location, please try again!")
+                return
             }
+            
+            let parameters: [String: AnyObject] = [
+                ParseClient.JSONBodyKeys.UserMediaURL: link,
+                ParseClient.JSONBodyKeys.UserMapString: userMapString!,
+                ParseClient.JSONBodyKeys.UserLatitude: latitude,
+                ParseClient.JSONBodyKeys.UserLongitude: longitude] as [String: AnyObject]
+            
+            overwriteOrPostPersonLocation(parameters)
         } else {
             performUIUpdatesOnMain { self.handleError("Link to share is required!") }
         }
@@ -42,21 +47,46 @@ class SaveLocationViewController: UIViewController {
     }
     
     func plotPinOnMap() {
-        for placemark in searchResultPlacemarks {
+        /*
+         * This will almost always be an array with a length of one, 
+         * but guard against multiple entries by always popping off the last element
+         * and storing the coordinate, and name in a property variable
+         */
+        if let placemark = searchResultPlacemarks.last {
+            userMapString = "\(String(describing: placemark.locality!)), \(String(describing: placemark.administrativeArea!))"
             if let location = placemark.location {
                 let coordinate = location.coordinate
+                userCoordinate = coordinate
                 let annotation = MKPointAnnotation()
                 annotation.coordinate = coordinate
                 mapView.addAnnotation(annotation)
             } else {
                 handleError("There was an error finding your location, please try again!")
             }
+        } else {
+            handleError("There was an error finding your location, please try again!")
+        }
+    }
+    
+    func overwriteOrPostPersonLocation(parameters: [String: AnyObject]) {
+        if OTMData.shared.overwriteExistingLocation {
+            ParseClient.sharedInstance().updatePersonLocation(parameters) { (results, error) in
+                performUIUpdatesOnMain {
+                    (error == nil) ? self.handleSuccess() : self.handleError((error?.domain)!)
+                }
+            }
+        } else {
+            ParseClient.sharedInstance().createPersonLocation(parameters) { (results, error) in
+                performUIUpdatesOnMain {
+                    (error == nil) ? self.handleSuccess() : self.handleError((error?.domain)!)
+                }
+            }
         }
     }
     
     func handleSuccess() {
         NotificationCenter.default.post(name: Notification.Name(rawValue: "RefreshPeopleResults"), object: nil)
-        self.dismiss(animated: true, completion: nil)
+        self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
     }
     
     func handleError(_ errorString: String) {

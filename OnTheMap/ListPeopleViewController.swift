@@ -43,7 +43,7 @@ extension ListPeopleViewController: UITableViewDelegate, UITableViewDataSource {
             let app = UIApplication.shared
             app.open(mediaURL, completionHandler: nil)
         } else {
-            print("no media url for this person")
+            Helper.handleError("No media url for this person", viewController: self)
         }
     }
     

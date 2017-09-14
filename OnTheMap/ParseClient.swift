@@ -66,8 +66,9 @@ class ParseClient: NSObject {
             if let error = error {
                 completionHandlerForCreatePerson(nil, error)
             } else {
-                if let _ = results?[ParseClient.JSONResponseKeys.ObjectID] as AnyObject? {
+                if let objectID = results?[ParseClient.JSONResponseKeys.ObjectID] as! String? {
                     OTMData.shared.userHasPostedLocation = true
+                    OTMData.shared.user!.objectID = objectID
                     completionHandlerForCreatePerson(results, nil)
                 } else {
                     completionHandlerForCreatePerson(nil, NSError(domain: "createPersonLocation parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse createPersonLocation"]))

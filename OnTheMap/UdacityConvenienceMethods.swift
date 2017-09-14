@@ -93,15 +93,55 @@ extension UdacityClient {
             self.convertDataWithCompletionHandler(newData, completionHandlerForConvertData: completionHandlerForPOST)
         }
         
-        /* 7. Start the request */
         task.resume()
         
         return task
     }
     
-    private func normalizeUdacityResponse(_ data: Data) -> Data {
-        let range = Range(5..<data.count)
-        return data.subdata(in: range)
+    func taskForDeleteMethod(_ method: String, parameters: [String:AnyObject] = [String:AnyObject](), jsonBodyData: [String: AnyObject] = [String:AnyObject](), completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+        
+        let url = udacityURLFromParameters(parameters, withPathExtension: method)
+        var request = udacityRequestWithHeaders(url: url, httpMethod: "DELETE")
+        request.httpBody = serializeJSONBodyData(jsonBodyData)
+        request = removeCookies(request)
+        
+        let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
+            
+            func sendError(_ error: String) {
+                print(error)
+                let userInfo = [NSLocalizedDescriptionKey : error]
+                completionHandlerForPOST(nil, NSError(domain: "taskForDeleteMethod", code: 1, userInfo: userInfo))
+            }
+            
+            /* GUARD: Make sure we didn't get an error from the server */
+            guard (error == nil) else {
+                sendError("There was an error with your request: \(error!)")
+                return
+            }
+            
+            /* GUARD: Make sure our response status code in in a successful range */
+            let successRange: Range<Int> = 200..<300
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, successRange ~= statusCode else {
+                sendError("Your request returned a status code other than 2xx!")
+                return
+            }
+            
+            /* GUARD: Make sure we have data coming back from the server */
+            guard let data = data else {
+                sendError("No data returned by the request!")
+                return
+            }
+            
+            /* Trim the first 5 bytes if we are posting to udacity */
+            let newData: Data = self.normalizeUdacityResponse(data)
+            
+            self.convertDataWithCompletionHandler(newData, completionHandlerForConvertData: completionHandlerForPOST)
+        }
+        
+        task.resume()
+        
+        return task
+        
     }
     
     func parseAndSaveLoginDetails(_ data: [String:AnyObject], completionHandlerForSaveLoginDetails: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) {
@@ -171,12 +211,34 @@ extension UdacityClient {
         }
     }
     
-    private func substituteKeyInMethod(_ method: String, key: String, value: String) -> String? {
+    func substituteKeyInMethod(_ method: String, key: String, value: String) -> String? {
         if method.range(of: "{\(key)}") != nil {
             return method.replacingOccurrences(of: "{\(key)}", with: value)
         } else {
             return nil
         }
+    }
+    
+    private func removeCookies(_ request: NSMutableURLRequest) -> NSMutableURLRequest {
+        var myRequest = request
+        var xsrfCookie: HTTPCookie? = nil
+        let sharedCookieStorage = HTTPCookieStorage.shared
+        
+        for cookie in sharedCookieStorage.cookies! {
+            if cookie.name == "XSRF-TOKEN" {
+                xsrfCookie = cookie
+            }
+        }
+        
+        if let xsrfCookie = xsrfCookie {
+            myRequest.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
+        }
+        
+        return myRequest
+    }
+    private func normalizeUdacityResponse(_ data: Data) -> Data {
+        let range = Range(5..<data.count)
+        return data.subdata(in: range)
     }
     
     private func serializeJSONBodyData(_ bodyData: [String: AnyObject]) -> Data {

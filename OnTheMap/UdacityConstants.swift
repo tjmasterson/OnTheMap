@@ -20,10 +20,13 @@ extension UdacityClient {
         static let ApiScheme = "https"
         static let ApiHost = "www.udacity.com"
         static let ApiPath = "/api"
+        
+        static let SignUp = "https://www.udacity.com/account/auth#!/signup"
     }
     
     struct Methods {
         static let Auth = "/session"
+        static let Logout = "/session/{sessionID}"
         static let User = "/users/{uniqueKey}"
     }
     

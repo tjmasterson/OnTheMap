@@ -12,7 +12,7 @@ struct OTMUser {
     let lastName: String
     let uniqueKey: String
     let sessionID: String
-    let objectID: String?
+    var objectID: String?
     
     init(dictionary: [String: AnyObject]) {
         uniqueKey = dictionary[UdacityClient.UserKeys.UserID] as! String

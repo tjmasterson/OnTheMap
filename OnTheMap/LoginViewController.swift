@@ -17,6 +17,14 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var debugTextLabel: UILabel!
+    @IBOutlet weak var signUpButton: UIButton!
+    
+    
+    @IBAction func signUpButtonPressed(_ sender: Any) {
+        let url = URL(string: UdacityClient.Constants.SignUp)!
+        let app = UIApplication.shared
+        app.open(url, completionHandler: nil)
+    }
     
     
     @IBAction func loginButtonPressed(_ sender: Any) {
@@ -37,7 +45,7 @@ class LoginViewController: UIViewController {
                 if (success != nil) {
                     self.completeCredentialLogin()
                 } else {
-                    print("self.displayError(errorString)")
+                    Helper.handleError("Error trying to login. Please try again.", viewController: self)
                 }
             }
         }

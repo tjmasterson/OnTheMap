@@ -21,7 +21,7 @@ class SaveLocationViewController: UIViewController {
     @IBAction func submitLocationPressed(_ sender: Any) {
         if let link = shareLinkTextField.text {
             guard let latitude = userCoordinate?.latitude, let longitude = userCoordinate?.longitude else {
-                handleError("There was a problem finding your latitude or longitude of your location, please try again!")
+                Helper.handleError("There was a problem finding your latitude or longitude of your location, please try again!", viewController: self)
                 return
             }
             
@@ -33,7 +33,7 @@ class SaveLocationViewController: UIViewController {
             
             overwriteOrPostPersonLocation(parameters)
         } else {
-            performUIUpdatesOnMain { self.handleError("Link to share is required!") }
+            performUIUpdatesOnMain { Helper.handleError("Link to share is required!", viewController: self) }
         }
     }
     
@@ -61,38 +61,32 @@ class SaveLocationViewController: UIViewController {
                 annotation.coordinate = coordinate
                 mapView.addAnnotation(annotation)
             } else {
-                handleError("There was an error finding your location, please try again!")
+                Helper.handleError("There was an error finding your location, please try again!", viewController: self)
             }
         } else {
-            handleError("There was an error finding your location, please try again!")
+            Helper.handleError("There was an error finding your location, please try again!", viewController: self)
         }
     }
     
-    func overwriteOrPostPersonLocation(parameters: [String: AnyObject]) {
+    func overwriteOrPostPersonLocation(_ parameters: [String: AnyObject]) {
         if OTMData.shared.overwriteExistingLocation {
             ParseClient.sharedInstance().updatePersonLocation(parameters) { (results, error) in
                 performUIUpdatesOnMain {
-                    (error == nil) ? self.handleSuccess() : self.handleError((error?.domain)!)
+                    (error == nil) ? self.handleSuccess() : Helper.handleError((error?.domain)!, viewController: self)
                 }
             }
         } else {
             ParseClient.sharedInstance().createPersonLocation(parameters) { (results, error) in
                 performUIUpdatesOnMain {
-                    (error == nil) ? self.handleSuccess() : self.handleError((error?.domain)!)
+                    (error == nil) ? self.handleSuccess() : Helper.handleError((error?.domain)!, viewController: self)
                 }
             }
         }
     }
     
     func handleSuccess() {
-        NotificationCenter.default.post(name: Notification.Name(rawValue: "RefreshPeopleResults"), object: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "RefreshPeopleData"), object: nil)
         self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
-    }
-    
-    func handleError(_ errorString: String) {
-        let alert = UIAlertController(title: "", message: errorString, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
-        present(alert, animated: true, completion: nil)
     }
 
 }

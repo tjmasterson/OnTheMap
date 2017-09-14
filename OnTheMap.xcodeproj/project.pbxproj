@@ -28,6 +28,7 @@
 		A1C098621F659AAF0004EE4E /* UdacityConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C098611F659AAF0004EE4E /* UdacityConstants.swift */; };
 		A1C098641F659B930004EE4E /* UdacityConvenienceMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C098631F659B930004EE4E /* UdacityConvenienceMethods.swift */; };
 		A1C098661F659BBB0004EE4E /* ParseConvenienceMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C098651F659BBB0004EE4E /* ParseConvenienceMethods.swift */; };
+		A1E177D01F6A9BB1003A9763 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E177CF1F6A9BB1003A9763 /* Helper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		A1C098611F659AAF0004EE4E /* UdacityConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityConstants.swift; sourceTree = "<group>"; };
 		A1C098631F659B930004EE4E /* UdacityConvenienceMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityConvenienceMethods.swift; sourceTree = "<group>"; };
 		A1C098651F659BBB0004EE4E /* ParseConvenienceMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseConvenienceMethods.swift; sourceTree = "<group>"; };
+		A1E177CF1F6A9BB1003A9763 /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 		A14744C71F4AFBD900B956D4 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				A1E177D11F6A9BB7003A9763 /* Helpers */,
 				A1C098531F60AA210004EE4E /* BasePeopleViewController.swift */,
 				A14744B51F4AF14300B956D4 /* MapPeopleViewController.swift */,
 				A14744B71F4AF14300B956D4 /* ListPeopleViewController.swift */,
@@ -150,6 +153,14 @@
 				A1C098631F659B930004EE4E /* UdacityConvenienceMethods.swift */,
 			);
 			name = Udacity;
+			sourceTree = "<group>";
+		};
+		A1E177D11F6A9BB7003A9763 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				A1E177CF1F6A9BB1003A9763 /* Helper.swift */,
+			);
+			name = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -232,6 +243,7 @@
 				A1B6AAD81F4AFD7B004E5A22 /* GCDExtension.swift in Sources */,
 				A14744B81F4AF14300B956D4 /* ListPeopleViewController.swift in Sources */,
 				A1C0985A1F642F810004EE4E /* SaveLocationViewController.swift in Sources */,
+				A1E177D01F6A9BB1003A9763 /* Helper.swift in Sources */,
 				A1C098601F659A890004EE4E /* UdacityClient.swift in Sources */,
 				A1B6AADA1F4AFE71004E5A22 /* OTMPerson.swift in Sources */,
 				A14744B41F4AF14300B956D4 /* AppDelegate.swift in Sources */,

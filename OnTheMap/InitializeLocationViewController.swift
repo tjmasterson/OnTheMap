@@ -17,7 +17,7 @@ class InitializeLocationViewController: UIViewController, MKMapViewDelegate {
         if let searchText = locationTextField.text, searchText != "" {
             geocodeSearchText(searchText)
         } else {
-            print("error no search text")
+            Helper.handleError("Location is required.", viewController: self)
         }
     }
     
@@ -32,7 +32,7 @@ class InitializeLocationViewController: UIViewController, MKMapViewDelegate {
     func geocodeSearchText(_ searchText: String) {
         CLGeocoder().geocodeAddressString(searchText) { (placemark, error) in
             performUIUpdatesOnMain {
-                (error == nil) ? self.handleSuccess(placemark!) : self.handleError(String(describing: error!))
+                (error == nil) ? self.handleSuccess(placemark!) : Helper.handleError(String(describing: error!), viewController: self)
             }
         }
     }
@@ -41,12 +41,6 @@ class InitializeLocationViewController: UIViewController, MKMapViewDelegate {
         let saveLocationViewController = self.storyboard!.instantiateViewController(withIdentifier: "SaveLocationViewController") as! SaveLocationViewController
         saveLocationViewController.searchResultPlacemarks = placemark
         self.present(saveLocationViewController, animated: true, completion: nil)
-    }
-    
-    func handleError(_ errorString: String) {
-        let alert = UIAlertController(title: "", message: errorString, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
-        present(alert, animated: true, completion: nil)
     }
 
 }

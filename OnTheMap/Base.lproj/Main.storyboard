@@ -39,12 +39,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fwn-U7-6ik" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1022" y="-821"/>
+            <point key="canvasLocation" x="-2420" y="-743"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="3XC-2V-o1E">
             <objects>
-                <viewController id="5sh-jo-clb" customClass="LoginViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" id="5sh-jo-clb" customClass="LoginViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="fTz-Tb-sN4"/>
                         <viewControllerLayoutGuide type="bottom" id="ueL-7u-3sy"/>
@@ -111,6 +111,23 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Don't Have An Account?" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UoF-if-jRg">
+                                <rect key="frame" x="16" y="456" width="215" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0kj-lA-Nx3">
+                                <rect key="frame" x="239" y="454" width="120" height="45"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Sign Up">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="signUpButtonPressed:" destination="5sh-jo-clb" eventType="touchUpInside" id="ko7-EU-j69"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.89803921568627454" green="0.5607843137254902" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -133,11 +150,12 @@
                         <outlet property="emailTextField" destination="Yus-vC-K1C" id="B42-Gi-cs2"/>
                         <outlet property="loginButton" destination="tjC-KS-QWr" id="QqQ-Gh-e8z"/>
                         <outlet property="passwordTextField" destination="bSo-ey-AND" id="Pof-3n-jXw"/>
+                        <outlet property="signUpButton" destination="0kj-lA-Nx3" id="4Ba-jo-BQs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kk6-sA-ZfV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2420" y="-20"/>
+            <point key="canvasLocation" x="-2420" y="-20.239880059970016"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="8BK-rf-tkx">

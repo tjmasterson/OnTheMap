@@ -23,6 +23,10 @@ class BasePeopleViewController: UITabBarController {
     }
     
     @IBAction func logoutButtonPressed(_ sender: Any) {
+        UdacityClient.sharedInstance().taskForCredentialLogoutMethod() { (results, error) in
+            let initialViewController = self.storyboard!.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+            self.present(initialViewController, animated: true, completion: nil)
+        }
     }
 
     override func viewDidLoad() {
@@ -41,7 +45,7 @@ class BasePeopleViewController: UITabBarController {
         }
     }
     
-    func stagePinRemovalAndTransition(action: UIAlertAction? = nil) {
+    func transitionAndStagePinRemoval(action: UIAlertAction? = nil) {
         OTMData.shared.overwriteExistingLocation = true
         trasitionToPinCreation()
     }
@@ -54,7 +58,7 @@ class BasePeopleViewController: UITabBarController {
     func confirmLocationOverwrite() {
         let message = "You have already posted your location. Would you like to overwrite it?"
         let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Overwrite", style: .default, handler: self.stagePinRemovalAndTransition))
+        alert.addAction(UIAlertAction(title: "Overwrite", style: .default, handler: self.transitionAndStagePinRemoval))
         alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
     }

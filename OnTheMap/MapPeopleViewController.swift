@@ -51,12 +51,6 @@ class MapPeopleViewController: UIViewController {
 
         mapView.showAnnotations(annotations, animated: true)
     }
-    
-    func handleError(_ errorString: String) {
-        let alert = UIAlertController(title: "", message: errorString, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
-        present(alert, animated: true, completion: nil)
-    }
 
 }
 
@@ -81,17 +75,17 @@ extension MapPeopleViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if control == view.rightCalloutAccessoryView {
-            let app = UIApplication.shared
+            let app = UIApplication.shared 
             if let toOpen = view.annotation?.subtitle!, let url = URL(string: toOpen) {
                 app.open(url) { (success) in
                     if !success {
                         performUIUpdatesOnMain {
-                            self.handleError("Link is not a valid url.")
+                            Helper.handleError("Link is not a valid url.", viewController: self)
                         }
                     }
                 }
             } else {
-                handleError("No link provided for this entry.")
+                Helper.handleError("No link provided for this entry.", viewController: self)
             }
         }
     }

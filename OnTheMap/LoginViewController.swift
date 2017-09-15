@@ -30,14 +30,11 @@ class LoginViewController: UIViewController {
     @IBAction func loginButtonPressed(_ sender: Any) {
         showLoading()
         
-//        let parameters: [String: AnyObject] = [
-//            UdacityClient.JSONBodyKeys.Username: emailTextField.text! as AnyObject,
-//            UdacityClient.JSONBodyKeys.Password: passwordTextField.text! as AnyObject
-//        ]
         let parameters: [String: AnyObject] = [
-            UdacityClient.JSONBodyKeys.Username: "taylor.j.masterson@gmail.com" as AnyObject,
-            UdacityClient.JSONBodyKeys.Password: "Elmstreet1127" as AnyObject,
-            ]
+            UdacityClient.JSONBodyKeys.Username: emailTextField.text! as AnyObject,
+            UdacityClient.JSONBodyKeys.Password: passwordTextField.text! as AnyObject
+        ]
+
         let _ = UdacityClient.sharedInstance().taskForCredentialLoginMethod(parameters: parameters) { (success, errorString) in
             performUIUpdatesOnMain {
                 self.hideLoading()
@@ -77,7 +74,6 @@ class LoginViewController: UIViewController {
 }
 
 extension LoginViewController: UITextFieldDelegate {
-    // MARK: - Text Field Delegate
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         textField.resignFirstResponder()

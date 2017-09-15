@@ -18,7 +18,6 @@
 		A1B6AAD81F4AFD7B004E5A22 /* GCDExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B6AAD71F4AFD7B004E5A22 /* GCDExtension.swift */; };
 		A1B6AADA1F4AFE71004E5A22 /* OTMPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B6AAD91F4AFE71004E5A22 /* OTMPerson.swift */; };
 		A1B6AADC1F4B03BF004E5A22 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B6AADB1F4B03BF004E5A22 /* LoginViewController.swift */; };
-		A1B6AADE1F4B08E2004E5A22 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B6AADD1F4B08E2004E5A22 /* SignupViewController.swift */; };
 		A1C098541F60AA210004EE4E /* BasePeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C098531F60AA210004EE4E /* BasePeopleViewController.swift */; };
 		A1C098561F6167350004EE4E /* OTMData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C098551F6167350004EE4E /* OTMData.swift */; };
 		A1C098581F642E510004EE4E /* InitializeLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C098571F642E510004EE4E /* InitializeLocationViewController.swift */; };
@@ -45,7 +44,6 @@
 		A1B6AAD71F4AFD7B004E5A22 /* GCDExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDExtension.swift; sourceTree = "<group>"; };
 		A1B6AAD91F4AFE71004E5A22 /* OTMPerson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMPerson.swift; sourceTree = "<group>"; };
 		A1B6AADB1F4B03BF004E5A22 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		A1B6AADD1F4B08E2004E5A22 /* SignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		A1C098531F60AA210004EE4E /* BasePeopleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasePeopleViewController.swift; sourceTree = "<group>"; };
 		A1C098551F6167350004EE4E /* OTMData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMData.swift; sourceTree = "<group>"; };
 		A1C098571F642E510004EE4E /* InitializeLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitializeLocationViewController.swift; sourceTree = "<group>"; };
@@ -108,7 +106,6 @@
 				A14744B51F4AF14300B956D4 /* MapPeopleViewController.swift */,
 				A14744B71F4AF14300B956D4 /* ListPeopleViewController.swift */,
 				A1B6AADB1F4B03BF004E5A22 /* LoginViewController.swift */,
-				A1B6AADD1F4B08E2004E5A22 /* SignupViewController.swift */,
 				A1C098571F642E510004EE4E /* InitializeLocationViewController.swift */,
 				A1C098591F642F810004EE4E /* SaveLocationViewController.swift */,
 			);
@@ -239,7 +236,6 @@
 				A1C098541F60AA210004EE4E /* BasePeopleViewController.swift in Sources */,
 				A1C098621F659AAF0004EE4E /* UdacityConstants.swift in Sources */,
 				A1C098641F659B930004EE4E /* UdacityConvenienceMethods.swift in Sources */,
-				A1B6AADE1F4B08E2004E5A22 /* SignupViewController.swift in Sources */,
 				A1B6AAD81F4AFD7B004E5A22 /* GCDExtension.swift in Sources */,
 				A14744B81F4AF14300B956D4 /* ListPeopleViewController.swift in Sources */,
 				A1C0985A1F642F810004EE4E /* SaveLocationViewController.swift in Sources */,

@@ -186,17 +186,17 @@ extension UdacityClient {
             } else {
                 if let results = results {
                     guard let user = results[UdacityClient.JSONResponseKeys.User] as? [String: AnyObject] else {
-                        print("shit")
+                        sendError("Could not find data for key \(UdacityClient.JSONResponseKeys.User) while trying to save login detials")
                         return
                     }
                     
                     guard let firstName = user[UdacityClient.JSONResponseKeys.FirstName] as AnyObject? else {
-                        print("no")
+                        sendError("Could not find data for key \(UdacityClient.JSONResponseKeys.FirstName) while trying to save login detials")
                         return
                     }
                     
                     guard let lastName = user[UdacityClient.JSONResponseKeys.LastName] as AnyObject? else {
-                        print("no")
+                        sendError("Could not find data for key \(UdacityClient.JSONResponseKeys.LastName) while trying to save login detials")
                         return
                     }
                     
@@ -220,7 +220,7 @@ extension UdacityClient {
     }
     
     private func removeCookies(_ request: NSMutableURLRequest) -> NSMutableURLRequest {
-        var myRequest = request
+        let myRequest = request
         var xsrfCookie: HTTPCookie? = nil
         let sharedCookieStorage = HTTPCookieStorage.shared
         
@@ -236,6 +236,7 @@ extension UdacityClient {
         
         return myRequest
     }
+    
     private func normalizeUdacityResponse(_ data: Data) -> Data {
         let range = Range(5..<data.count)
         return data.subdata(in: range)
@@ -284,7 +285,6 @@ extension UdacityClient {
         return paramsWithOptions
     }
     
-    // given raw JSON, return a usable Foundation object
     private func convertDataWithCompletionHandler(_ data: Data, completionHandlerForConvertData: (_ result: AnyObject?, _ error: NSError?) -> Void) {
         
         var parsedResult: AnyObject! = nil

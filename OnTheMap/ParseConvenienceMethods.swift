@@ -72,7 +72,8 @@ extension ParseClient {
             }
             
             // GUARD: Make sure we get a response status in a successful range
-            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
+            let successRange: Range<Int> = 200..<300
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, successRange ~= statusCode else {
                 sendError("Your request returned a status code other than 2xx!")
                 return
             }
@@ -112,7 +113,8 @@ extension ParseClient {
             }
             
             // GUARD: Make sure we get a response status in a successful range
-            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
+            let successRange: Range<Int> = 200..<300
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, successRange ~= statusCode else {
                 sendError("Your request returned a status code other than 2xx!")
                 return
             }

@@ -11,36 +11,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Signup View Controller-->
-        <scene sceneID="rMR-z7-guZ">
-            <objects>
-                <viewController id="9Fu-fa-ROJ" customClass="SignupViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="MO8-QB-bsk"/>
-                        <viewControllerLayoutGuide type="bottom" id="y57-af-NOF"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="lcG-5T-cKL">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="56A-Ww-8dq">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
-                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </webView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="56A-Ww-8dq" secondAttribute="trailing" id="3uL-k2-OwW"/>
-                            <constraint firstItem="56A-Ww-8dq" firstAttribute="top" secondItem="MO8-QB-bsk" secondAttribute="bottom" id="PTD-oT-geV"/>
-                            <constraint firstItem="y57-af-NOF" firstAttribute="top" secondItem="56A-Ww-8dq" secondAttribute="bottom" id="hJs-5U-Pa1"/>
-                            <constraint firstItem="56A-Ww-8dq" firstAttribute="leading" secondItem="lcG-5T-cKL" secondAttribute="leading" id="niw-lB-4LI"/>
-                        </constraints>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Fwn-U7-6ik" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-2420" y="-743"/>
-        </scene>
         <!--Login View Controller-->
         <scene sceneID="3XC-2V-o1E">
             <objects>

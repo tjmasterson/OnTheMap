@@ -87,13 +87,9 @@
 			isa = PBXGroup;
 			children = (
 				A14744B31F4AF14300B956D4 /* AppDelegate.swift */,
-				A1B6AAD71F4AFD7B004E5A22 /* GCDExtension.swift */,
 				A1B6AAD31F4AFCC9004E5A22 /* Model */,
 				A14744C71F4AFBD900B956D4 /* Controller */,
-				A14744B91F4AF14300B956D4 /* Main.storyboard */,
-				A14744BC1F4AF14300B956D4 /* Assets.xcassets */,
-				A14744BE1F4AF14300B956D4 /* LaunchScreen.storyboard */,
-				A14744C11F4AF14300B956D4 /* Info.plist */,
+				A19CBDCB1F6EEB740087CB42 /* Assets */,
 			);
 			path = OnTheMap;
 			sourceTree = "<group>";
@@ -110,6 +106,17 @@
 				A1C098591F642F810004EE4E /* SaveLocationViewController.swift */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		A19CBDCB1F6EEB740087CB42 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				A14744B91F4AF14300B956D4 /* Main.storyboard */,
+				A14744BC1F4AF14300B956D4 /* Assets.xcassets */,
+				A14744BE1F4AF14300B956D4 /* LaunchScreen.storyboard */,
+				A14744C11F4AF14300B956D4 /* Info.plist */,
+			);
+			name = Assets;
 			sourceTree = "<group>";
 		};
 		A1B6AAD31F4AFCC9004E5A22 /* Model */ = {
@@ -155,6 +162,7 @@
 		A1E177D11F6A9BB7003A9763 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				A1B6AAD71F4AFD7B004E5A22 /* GCDExtension.swift */,
 				A1E177CF1F6A9BB1003A9763 /* Helper.swift */,
 			);
 			name = Helpers;

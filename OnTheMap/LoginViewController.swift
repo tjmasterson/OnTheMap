@@ -10,6 +10,7 @@ import UIKit
 
 class LoginViewController: UIViewController {
 
+    var keyboardOnScreen = false
     var activityIndicator: UIActivityIndicatorView!
     var originalButtonText: String?
     
@@ -19,6 +20,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var debugTextLabel: UILabel!
     @IBOutlet weak var signUpButton: UIButton!
     
+
     
     @IBAction func signUpButtonPressed(_ sender: Any) {
         let url = URL(string: UdacityClient.Constants.SignUp)!
@@ -28,6 +30,7 @@ class LoginViewController: UIViewController {
     
     
     @IBAction func loginButtonPressed(_ sender: Any) {
+        userDidTapView(self)
         showLoading()
         
         let parameters: [String: AnyObject] = [
@@ -50,6 +53,15 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: .UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow), name: .UIKeyboardDidShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidHide), name: .UIKeyboardDidHide, object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
     }
     
     func shouldLoginBeDisabled() {
@@ -78,10 +90,48 @@ extension LoginViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         textField.resignFirstResponder()
     }
-    
+        
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    func keyboardWillShow(_ notification: Notification) {
+        if !keyboardOnScreen && Helper.orientationIsLandscape() {
+            view.frame.origin.y -= keyboardHeight(notification)
+        }
+    }
+    
+    func keyboardWillHide(_ notification: Notification) {
+        if keyboardOnScreen && Helper.orientationIsLandscape() {
+            view.frame.origin.y += keyboardHeight(notification)
+        }
+    }
+    
+    func keyboardDidShow(_ notification: Notification) {
+        keyboardOnScreen = true
+    }
+    
+    func keyboardDidHide(_ notification: Notification) {
+        keyboardOnScreen = false
+    }
+    
+    
+    private func keyboardHeight(_ notification: Notification) -> CGFloat {
+        let userInfo = (notification as NSNotification).userInfo
+        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
+        return keyboardSize.cgRectValue.height / 2
+    }
+    
+    private func resignIfFirstResponder(_ textField: UITextField) {
+        if textField.isFirstResponder {
+            textField.resignFirstResponder()
+        }
+    }
+    
+    @IBAction func userDidTapView(_ sender: AnyObject) {
+        resignIfFirstResponder(emailTextField)
+        resignIfFirstResponder(passwordTextField)
     }
     
 }
@@ -127,3 +177,4 @@ extension LoginViewController {
         loginButton.addConstraint(yCenterConstraint)
     }
 }
+

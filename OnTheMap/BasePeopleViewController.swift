@@ -23,10 +23,9 @@ class BasePeopleViewController: UITabBarController {
     }
     
     @IBAction func logoutButtonPressed(_ sender: Any) {
-        UdacityClient.sharedInstance().taskForCredentialLogoutMethod() { (results, error) in
-            let initialViewController = self.storyboard!.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
-            self.present(initialViewController, animated: true, completion: nil)
-        }
+        UdacityClient.sharedInstance().taskForCredentialLogoutMethod() { (results, error) in }
+        let initialViewController = self.storyboard!.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+        self.present(initialViewController, animated: false, completion: nil)
     }
 
     override func viewDidLoad() {
@@ -41,6 +40,8 @@ class BasePeopleViewController: UITabBarController {
                     OTMData.shared.people = people
                     NotificationCenter.default.post(name: Notification.Name(rawValue: "RefreshPeopleData"), object: self)
                 }
+            } else {
+                Helper.handleError("There was a problem fetching location data", viewController: self)
             }
         }
     }

@@ -11,13 +11,9 @@ import MapKit
 
 class MapPeopleViewController: UIViewController {
 
-    var activityIndicator: UIActivityIndicatorView!
+    var activityIndicator = UIActivityIndicatorView()
     
     @IBOutlet weak var mapView: MKMapView!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -25,9 +21,10 @@ class MapPeopleViewController: UIViewController {
     }
     
     func refresh() {
-        if (!mapView.annotations.isEmpty) {
-            mapView.removeAnnotations(mapView.annotations)
-        }
+        showLoading()
+         mapView.reloadInputViews()
+    
+        mapView.removeAnnotations(mapView.annotations)
         
         var annotations = [MKPointAnnotation]()
         for person in OTMData.shared.people {
@@ -44,12 +41,10 @@ class MapPeopleViewController: UIViewController {
             annotation.subtitle = mediaURL
             
             annotations.append(annotation)
-            
-            // not really sure why I don't need to keep this...
-            // self.mapView.addAnnotation(annotation)
         }
 
         mapView.showAnnotations(annotations, animated: true)
+        hideLoading()
     }
 
 }
@@ -92,4 +87,22 @@ extension MapPeopleViewController: MKMapViewDelegate {
 
 }
 
+extension MapPeopleViewController {
+    func showLoading() {
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.color = UIColor.blue
+        view.alpha = CGFloat(0.5)
+        activityIndicator.activityIndicatorViewStyle = .whiteLarge
+        activityIndicator.center = view.center
+        view.addSubview(activityIndicator)
+        
+        activityIndicator.startAnimating()
+    }
+    
+    func hideLoading() {
+        view.alpha = CGFloat(1.0)
+        activityIndicator.stopAnimating()
+    }
+    
+}
 

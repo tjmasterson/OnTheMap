@@ -50,10 +50,7 @@ class UdacityClient: NSObject {
     
     func taskForCredentialLogoutMethod(completionHandlerForCredentialLogin: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void ) -> Void {
         
-        var mutableMethod = UdacityClient.Methods.Logout
-        mutableMethod = substituteKeyInMethod(mutableMethod, key: UdacityClient.UserKeys.UserSessionID, value: OTMData.shared.user!.sessionID)!
-        
-        let _ = taskForDeleteMethod(mutableMethod) { (results, error) in
+        let _ = taskForDeleteMethod(UdacityClient.Methods.Logout) { (results, error) in
             if let error = error {
                 completionHandlerForCredentialLogin(nil, error)
             } else {

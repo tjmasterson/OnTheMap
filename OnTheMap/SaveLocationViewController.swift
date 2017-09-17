@@ -57,8 +57,14 @@ class SaveLocationViewController: UIViewController {
             if let location = placemark.location {
                 let coordinate = location.coordinate
                 userCoordinate = coordinate
+                
                 let annotation = MKPointAnnotation()
                 annotation.coordinate = coordinate
+                
+                let coordinateSpan = MKCoordinateSpanMake(0.5, 0.5)
+                let region = MKCoordinateRegion(center: coordinate, span: coordinateSpan)
+                
+                mapView.setRegion(region, animated: true)
                 mapView.addAnnotation(annotation)
             } else {
                 Helper.handleError("There was an error finding your location, please try again!", viewController: self)

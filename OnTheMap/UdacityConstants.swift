@@ -26,7 +26,7 @@ extension UdacityClient {
     
     struct Methods {
         static let Auth = "/session"
-        static let Logout = "/session/{sessionID}"
+        static let Logout = "/session"
         static let User = "/users/{uniqueKey}"
     }
     

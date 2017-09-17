@@ -15,19 +15,19 @@ class ListPeopleTableViewCell: UITableViewCell {
 
 class ListPeopleViewController: UIViewController {
 
+    var activityIndicator = UIActivityIndicatorView()
+    
     @IBOutlet weak var tableView: UITableView!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: Notification.Name(rawValue: "RefreshPeopleData"), object: nil)
     }
     
     func refresh() {
+        showLoading()
         self.tableView.reloadData()
+        hideLoading()
     }
 
 }
@@ -54,4 +54,23 @@ extension ListPeopleViewController: UITableViewDelegate, UITableViewDataSource {
         cell.nameLabel.text = "\(person.firstName) \(person.lastName)"
         return cell
     }
+}
+
+extension ListPeopleViewController {
+    func showLoading() {
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.color = UIColor.blue
+        view.alpha = CGFloat(0.5)
+        activityIndicator.activityIndicatorViewStyle = .whiteLarge
+        activityIndicator.center = view.center
+        view.addSubview(activityIndicator)
+        
+        activityIndicator.startAnimating()
+    }
+    
+    func hideLoading() {
+        view.alpha = CGFloat(1.0)
+        activityIndicator.stopAnimating()
+    }
+    
 }

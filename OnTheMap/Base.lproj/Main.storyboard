@@ -295,7 +295,7 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="findOnTheMapButtonPressed:" destination="4CB-tC-wZ5" eventType="touchUpInside" id="8H0-gV-iaE"/>
+                                    <action selector="findOnTheMapButtonPressed:" destination="4CB-tC-wZ5" eventType="touchUpInside" id="kWF-3j-Onv"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_world" translatesAutoresizingMaskIntoConstraints="NO" id="BQ9-VM-OGb">
@@ -303,6 +303,7 @@
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="PlQ-vA-7o9" secondAttribute="trailing" id="6aq-wv-bJN"/>
                             <constraint firstItem="bzE-zl-4lF" firstAttribute="centerX" secondItem="tPX-pl-h1T" secondAttribute="centerX" id="CL3-W8-Dz9"/>
@@ -316,12 +317,21 @@
                             <constraint firstItem="OE9-5C-aL7" firstAttribute="centerX" secondItem="tPX-pl-h1T" secondAttribute="centerX" id="mle-Zt-tyH"/>
                             <constraint firstItem="LpK-5K-7RT" firstAttribute="centerX" secondItem="tPX-pl-h1T" secondAttribute="centerX" id="qek-RT-RHj"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="tD2-u8-uqX" appends="YES" id="flt-6h-nHq"/>
+                        </connections>
                     </view>
                     <connections>
+                        <outlet property="findOnTheMapButton" destination="OE9-5C-aL7" id="DY9-gb-uqj"/>
                         <outlet property="locationTextField" destination="bzE-zl-4lF" id="Sxf-jo-VeL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SXu-on-Bp3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="tD2-u8-uqX">
+                    <connections>
+                        <action selector="userDidTapView:" destination="4CB-tC-wZ5" id="I6V-dg-bZC"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="760.79999999999995" y="-333.28335832083962"/>
         </scene>

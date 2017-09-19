@@ -24,8 +24,7 @@ class BasePeopleViewController: UITabBarController {
     
     @IBAction func logoutButtonPressed(_ sender: Any) {
         UdacityClient.sharedInstance().taskForCredentialLogoutMethod() { (results, error) in }
-        let initialViewController = self.storyboard!.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
-        self.present(initialViewController, animated: false, completion: nil)
+        dismiss(animated: false, completion: nil)
     }
 
     override func viewDidLoad() {

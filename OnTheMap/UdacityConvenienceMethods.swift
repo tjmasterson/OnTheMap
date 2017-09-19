@@ -62,22 +62,22 @@ extension UdacityClient {
         
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
             
-            func sendError(_ error: String) {
+            func sendError(_ error: String, reason: String = "") {
                 print(error)
-                let userInfo = [NSLocalizedDescriptionKey : error]
+                let userInfo = [NSLocalizedDescriptionKey : error, NSLocalizedFailureReasonErrorKey: reason]
                 completionHandlerForPOST(nil, NSError(domain: "taskForPOSTMethod", code: 1, userInfo: userInfo))
             }
             
             /* GUARD: Make sure we didn't get an error from the server */
             guard (error == nil) else {
-                sendError("There was an error with your request: \(error!)")
+                sendError("There was an error with your request", reason: String(describing: error))
                 return
             }
-            
+
             /* GUARD: Make sure our response status code in in a successful range */
             let successRange: Range<Int> = 200..<300
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode, successRange ~= statusCode else {
-                sendError("Your request returned a status code other than 2xx!")
+                sendError("Login failed, please try again.", reason: "Status code other than 2xx!")
                 return
             }
             
@@ -118,7 +118,7 @@ extension UdacityClient {
                 sendError("There was an error with your request: \(error!)")
                 return
             }
-
+            
             /* GUARD: Make sure our response status code in in a successful range */
             let successRange: Range<Int> = 200..<300
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode, successRange ~= statusCode else {

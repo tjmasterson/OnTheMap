@@ -154,6 +154,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="Yt5-hp-Rbe">
+                        <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="49e-Tb-3d3" kind="relationship" relationship="rootViewController" id="dot-9T-i83"/>
                     </connections>
@@ -349,6 +353,10 @@
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ctb-h4-G6b">
                                 <rect key="frame" x="0.0" y="172" width="375" height="495"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="b3j-bh-n3G" appends="YES" id="C6X-Nc-iv3"/>
+                                </connections>
                             </mapView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add Link To Share" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2nJ-Ig-w36">
                                 <rect key="frame" x="16" y="93" width="343" height="50"/>
@@ -408,6 +416,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l6u-RZ-JpB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="b3j-bh-n3G">
+                    <connections>
+                        <action selector="userDidTapView:" destination="eVI-qz-nKi" id="emW-Wk-Rzb"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1520.8" y="-333.28335832083962"/>
         </scene>

@@ -43,6 +43,7 @@ class SaveLocationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        shareLinkTextField.delegate = self
         plotPinOnMap()
     }
     
@@ -125,3 +126,64 @@ extension SaveLocationViewController: MKMapViewDelegate {
     }
     
 }
+
+extension SaveLocationViewController: UITextFieldDelegate {
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        textField.resignFirstResponder()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    @IBAction func userDidTapView(_ sender: AnyObject) {
+        if shareLinkTextField.isFirstResponder {
+            shareLinkTextField.resignFirstResponder()
+        }
+    }
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

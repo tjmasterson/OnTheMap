@@ -33,6 +33,7 @@ class InitializeLocationViewController: UIViewController, MKMapViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        locationTextField.delegate = self
     }
 
     func geocodeSearchText(_ searchText: String) {

@@ -38,14 +38,15 @@ class LoginViewController: UIViewController {
             UdacityClient.JSONBodyKeys.Password: passwordTextField.text! as AnyObject
         ]
         
-        let _ = UdacityClient.sharedInstance().taskForCredentialLoginMethod(parameters: parameters) { (success, errorString) in
+        let _ = UdacityClient.sharedInstance().taskForCredentialLoginMethod(parameters: parameters) { (success, error) in
             performUIUpdatesOnMain {
                 self.hideLoading()
                 
                 if (success != nil) {
                     self.completeCredentialLogin()
                 } else {
-                    Helper.handleError("Error trying to login. Please try again later.", viewController: self)
+                    
+                    Helper.handleError((error?.localizedDescription)!, viewController: self)
                 }
             }
         }

@@ -70,7 +70,7 @@ extension ParseClient {
                 sendError("There was an error with your request: \(error!)")
                 return
             }
-            
+           
             // GUARD: Make sure we get a response status in a successful range
             let successRange: Range<Int> = 200..<300
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode, successRange ~= statusCode else {

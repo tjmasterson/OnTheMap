@@ -20,9 +20,14 @@ class MapPeopleViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: Notification.Name(rawValue: "RefreshPeopleData"), object: nil)
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "RefreshPeopleData"), object: nil)
+    }
+    
     func refresh() {
         showLoading()
-         mapView.reloadInputViews()
+        mapView.reloadInputViews()
     
         mapView.removeAnnotations(mapView.annotations)
         

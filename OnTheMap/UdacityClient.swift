@@ -22,15 +22,11 @@ class UdacityClient: NSObject {
         super.init()
     }
     
-    func taskForCredentialLoginMethod(parameters: [String: AnyObject], completionHandlerForCredentialLogin: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void ) -> Void {
-        
-        
-        let username: String = String(describing: parameters[UdacityClient.JSONBodyKeys.Username]!)
-        let password: String = String(describing: parameters[UdacityClient.JSONBodyKeys.Password]!)
+    func taskForCredentialLoginMethod(email: String, password: String, completionHandlerForCredentialLogin: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void ) -> Void {
 
         let bodyData = [
             UdacityClient.JSONBodyKeys.AuthWrapper: [
-                UdacityClient.JSONBodyKeys.Username: username,
+                UdacityClient.JSONBodyKeys.Username: email,
                 UdacityClient.JSONBodyKeys.Password: password
             ]
         ] as [String: AnyObject]

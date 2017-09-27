@@ -112,7 +112,6 @@ extension SaveLocationViewController: MKMapViewDelegate {
         } else {
             pinView!.annotation = annotation
         }
-        
         return pinView
     }
     

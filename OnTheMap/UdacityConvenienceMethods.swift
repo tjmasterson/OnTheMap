@@ -54,9 +54,9 @@ extension UdacityClient {
         
     }
 
-    func taskForPOSTMethod(_ method: String, parameters: [String:AnyObject] = [String:AnyObject](), jsonBodyData: [String: AnyObject], completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+    func taskForPOSTMethod(_ method: String, jsonBodyData: [String: AnyObject], completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
-        let url = udacityURLFromParameters(parameters, withPathExtension: method)
+        let url = udacityURLFromParameters(withPathExtension: method)
         let request = udacityRequestWithHeaders(url: url, httpMethod: "POST")
         request.httpBody = serializeJSONBodyData(jsonBodyData)
         
@@ -98,9 +98,9 @@ extension UdacityClient {
         return task
     }
     
-    func taskForDeleteMethod(_ method: String, parameters: [String:AnyObject] = [String:AnyObject](), jsonBodyData: [String: AnyObject] = [String:AnyObject](), completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+    func taskForDeleteMethod(_ method: String, jsonBodyData: [String: AnyObject] = [String:AnyObject](), completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
-        let url = udacityURLFromParameters(parameters, withPathExtension: method)
+        let url = udacityURLFromParameters(withPathExtension: method)
         var request = udacityRequestWithHeaders(url: url, httpMethod: "DELETE")
         request.httpBody = serializeJSONBodyData(jsonBodyData)
         request = removeCookies(request)
@@ -261,7 +261,7 @@ extension UdacityClient {
         return request
     }
     
-    private func udacityURLFromParameters(_ parameters: [String:AnyObject], withPathExtension: String? = nil) -> URL {
+    private func udacityURLFromParameters(_ parameters: [String:AnyObject] = [String:AnyObject](), withPathExtension: String? = nil) -> URL {
         
         var components = URLComponents()
         components.scheme = UdacityClient.Constants.ApiScheme

@@ -32,13 +32,8 @@ class LoginViewController: UIViewController {
     @IBAction func loginButtonPressed(_ sender: Any) {
         userDidTapView(self)
         showLoading()
-        
-        let parameters: [String: AnyObject] = [
-            UdacityClient.JSONBodyKeys.Username: emailTextField.text! as AnyObject,
-            UdacityClient.JSONBodyKeys.Password: passwordTextField.text! as AnyObject
-        ]
-        
-        let _ = UdacityClient.sharedInstance().taskForCredentialLoginMethod(parameters: parameters) { (success, error) in
+
+        let _ = UdacityClient.sharedInstance().taskForCredentialLoginMethod(email: emailTextField.text!, password: passwordTextField.text!) { (success, error) in
             performUIUpdatesOnMain {
                 self.hideLoading()
                 
